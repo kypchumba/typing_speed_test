@@ -1,54 +1,117 @@
-<html lang="en"> 
-<head> 
-	<title>Simple Speed Typer</title> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseType | Typing Speed Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <main class="app_shell">
+        <section class="hero_panel">
+            <p class="eyebrow">Precision practice</p>
+            <h1 class="heading">Typing, but with a sharper edge.</h1>
+            <p class="subheading">
+                Test your speed, track your rhythm, and chase cleaner runs with a more polished typing workspace.
+            </p>
+        </section>
 
-	<!-- link the CSS file here -->
-	 <link rel="stylesheet" type="text/css" href="style.css">
-</head> 
-<body> 
-<div class="container"> 
-	<div class="heading"> 
-	Speed Typing Test
-	</div> 
-	<div class="header"> 
-	<div class="wpm"> 
-		<div class="header_text">WPM</div> 
-		<div class="curr_wpm">100</div> 
-	</div> 
-	<div class="cpm"> 
-		<div class="header_text">CPM</div> 
-		<div class="curr_cpm">100</div> 
-	</div> 
-	<div class="errors"> 
-		<div class="header_text">Errors</div> 
-		<div class="curr_errors">0</div> 
-	</div> 
-	<div class="timer"> 
-		<div class="header_text">Time</div> 
-		<div class="curr_time">60s</div> 
-	</div> 
-	<div class="accuracy"> 
-		<div class="header_text">% Accuracy</div> 
-		<div class="curr_accuracy">100</div> 
-	</div> 
-	</div> 
+        <section class="container">
+            <div class="test_topbar">
+                <div>
+                    <p class="panel_label">Live challenge</p>
+                    <h2 class="panel_title">PulseType Sprint</h2>
+                </div>
+                <div class="status_badge">60 second session</div>
+            </div>
 
-	<div class="quote"> 
-	Click on the area below to start the game. 
-	</div> 
-	<textarea class="input_area"
-	placeholder="start typing here..."
-	oninput="processCurrentText()"
-	onfocus="startGame()"> 
-	</textarea> 
-	<button class="restart_btn"
-	onclick="resetValues()"> 
-	Restart 
-	</button> 
-</div> 
+            <div class="header">
+                <article class="stat_card timer">
+                    <div class="header_text">Time left</div>
+                    <div class="curr_time">60s</div>
+                </article>
+                <article class="stat_card accuracy">
+                    <div class="header_text">Accuracy</div>
+                    <div class="curr_accuracy">100%</div>
+                </article>
+                <article class="stat_card errors">
+                    <div class="header_text">Errors</div>
+                    <div class="curr_errors">0</div>
+                </article>
+                <article class="stat_card wpm">
+                    <div class="header_text">WPM</div>
+                    <div class="curr_wpm">0</div>
+                </article>
+                <article class="stat_card cpm">
+                    <div class="header_text">CPM</div>
+                    <div class="curr_cpm">0</div>
+                </article>
+            </div>
 
-<!-- link the JavaScript file here -->
-<script src="Typing%20Speed%20Test.js"> 
-</script> 
-</body> 
-</html> 
+            <div class="progress_track" aria-hidden="true">
+                <div class="progress_fill"></div>
+            </div>
+
+            <div class="quote_panel">
+                <p class="quote_prompt">Type the highlighted passage exactly as shown.</p>
+                <div class="quote" aria-live="polite">
+                    Click into the typing area to start your session.
+                </div>
+            </div>
+
+            <label class="input_label" for="typingInput">Your run</label>
+            <textarea
+                id="typingInput"
+                class="input_area"
+                placeholder="Start typing here..."
+                oninput="processCurrentText()"
+                onfocus="startGame()"
+                spellcheck="false"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"></textarea>
+
+            <div class="action_row">
+                <p class="helper_text">Focus once to begin. Your stats update in real time.</p>
+                <button class="restart_btn" onclick="resetValues()">Restart run</button>
+            </div>
+
+            <section class="results_panel" aria-live="polite">
+                <div class="results_header">
+                    <div>
+                        <p class="panel_label">Run summary</p>
+                        <h3 class="results_title">Performance dashboard</h3>
+                    </div>
+                    <div class="best_badge">Best WPM: <span class="best_wpm">0</span></div>
+                </div>
+
+                <div class="results_grid">
+                    <article class="result_card">
+                        <div class="header_text">Last WPM</div>
+                        <div class="result_value last_wpm">0</div>
+                    </article>
+                    <article class="result_card">
+                        <div class="header_text">Last Accuracy</div>
+                        <div class="result_value last_accuracy">100%</div>
+                    </article>
+                    <article class="result_card">
+                        <div class="header_text">Best Accuracy</div>
+                        <div class="result_value best_accuracy">100%</div>
+                    </article>
+                    <article class="result_card">
+                        <div class="header_text">Best CPM</div>
+                        <div class="result_value best_cpm">0</div>
+                    </article>
+                </div>
+
+                <p class="results_note">Finish a run to update your dashboard. Personal bests are saved on this device.</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="Typing%20Speed%20Test.js"></script>
+</body>
+</html>
