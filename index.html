@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Somewhere Typing Test</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <main class="assessment-shell">
+        <header class="app-header">
+            <div>
+                <p class="brand-mark">Somewhere</p>
+                <h1>Typing Test</h1>
+            </div>
+            <div class="attempt-pill">60 seconds | 40 WPM | 80% accuracy</div>
+        </header>
+
+        <nav class="stepper" aria-label="Assessment progress">
+            <button class="step" type="button" data-step-target="0">
+                <span class="step-number">1</span>
+                <span class="step-label">Practice</span>
+            </button>
+            <button class="step" type="button" data-step-target="1">
+                <span class="step-number">2</span>
+                <span class="step-label">Typing Test</span>
+            </button>
+            <button class="step" type="button" data-step-target="2">
+                <span class="step-number">3</span>
+                <span class="step-label">Test Summary</span>
+            </button>
+        </nav>
+
+        <section class="panel" data-step="0">
+            <div class="panel-heading with-actions">
+                <div>
+                    <p class="section-kicker">Step 1 of 3</p>
+                    <h2>Practice</h2>
+                </div>
+                <div class="timer-chip"><span id="practiceTime">60</span>s</div>
+            </div>
+
+            <div class="metrics-grid compact">
+                <div class="metric">
+                    <span>WPM</span>
+                    <strong id="practiceWpm">0</strong>
+                </div>
+                <div class="metric">
+                    <span>Accuracy</span>
+                    <strong id="practiceAccuracy">100%</strong>
+                </div>
+                <div class="metric">
+                    <span>Errors</span>
+                    <strong id="practiceErrors">0</strong>
+                </div>
+            </div>
+
+            <div class="typing-layout">
+                <div class="passage" id="practicePassage" aria-label="Practice passage"></div>
+                <textarea id="practiceInput" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" disabled></textarea>
+            </div>
+
+            <div class="button-row split">
+                <button class="secondary-btn" type="button" id="resetPractice">Reset practice</button>
+                <div class="cluster">
+                    <button class="primary-btn" type="button" id="startPractice">Start practice</button>
+                    <button class="primary-btn" type="button" data-next>Continue to test</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" data-step="1" hidden>
+            <div class="panel-heading with-actions">
+                <div>
+                    <p class="section-kicker">Step 2 of 3</p>
+                    <h2>Typing Test</h2>
+                </div>
+                <div class="timer-chip official"><span id="testTime">60</span>s</div>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric">
+                    <span>Net WPM</span>
+                    <strong id="testWpm">0</strong>
+                </div>
+                <div class="metric">
+                    <span>Accuracy</span>
+                    <strong id="testAccuracy">100%</strong>
+                </div>
+                <div class="metric">
+                    <span>Errors</span>
+                    <strong id="testErrors">0</strong>
+                </div>
+                <div class="metric">
+                    <span>Typed</span>
+                    <strong id="testTyped">0</strong>
+                </div>
+            </div>
+
+            <div class="progress-track" aria-hidden="true">
+                <div id="testProgress" class="progress-fill"></div>
+            </div>
+
+            <div class="typing-layout official-test">
+                <div class="passage" id="testPassage" aria-label="Official test passage"></div>
+                <textarea id="testInput" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" disabled></textarea>
+            </div>
+
+            <div class="button-row split">
+                <button class="secondary-btn" type="button" data-back>Back to practice</button>
+                <div class="cluster">
+                    <button class="primary-btn" type="button" id="startTest">Start test</button>
+                    <button class="primary-btn" type="button" id="viewSummary" disabled>View summary</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" data-step="2" hidden>
+            <div class="panel-heading">
+                <p class="section-kicker">Step 3 of 3</p>
+                <h2>Test Summary</h2>
+            </div>
+
+            <div class="summary-status" id="summaryStatus">
+                Complete the official test to generate a result.
+            </div>
+
+            <dl class="summary-grid">
+                <div>
+                    <dt>Net WPM</dt>
+                    <dd id="summaryWpm">-</dd>
+                </div>
+                <div>
+                    <dt>Accuracy</dt>
+                    <dd id="summaryAccuracy">-</dd>
+                </div>
+                <div>
+                    <dt>Errors</dt>
+                    <dd id="summaryErrors">-</dd>
+                </div>
+                <div>
+                    <dt>Time used</dt>
+                    <dd id="summaryTime">-</dd>
+                </div>
+                <div>
+                    <dt>Result date</dt>
+                    <dd id="summaryDate">-</dd>
+                </div>
+            </dl>
+
+            <div class="button-row split">
+                <button class="secondary-btn" type="button" id="newAssessment">New assessment</button>
+                <button class="primary-btn" type="button" id="printSummary">Print result</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="typing.js"></script>
+</body>
+</html>
