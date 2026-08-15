@@ -38,7 +38,6 @@ const summaryDate = document.querySelector("#summaryDate");
 const newAssessmentBtn = document.querySelector("#newAssessment");
 const printSummaryBtn = document.querySelector("#printSummary");
 
-let highestUnlockedStep = 0;
 let currentStep = 0;
 let practiceTimer = null;
 let testTimer = null;
@@ -58,10 +57,6 @@ function createRunState(totalSeconds) {
 }
 
 function goToStep(index) {
-    if (index > highestUnlockedStep) {
-        return;
-    }
-
     currentStep = index;
 
     panels.forEach((panel, panelIndex) => {
@@ -72,13 +67,11 @@ function goToStep(index) {
 
     steps.forEach((step, stepIndex) => {
         step.classList.toggle("is-active", stepIndex === index);
-        step.classList.toggle("is-complete", stepIndex < highestUnlockedStep);
-        step.disabled = stepIndex > highestUnlockedStep;
+        step.disabled = false;
     });
 }
 
 function unlockStep(index) {
-    highestUnlockedStep = Math.max(highestUnlockedStep, index);
     goToStep(index);
 }
 
@@ -249,7 +242,7 @@ function finishOfficialTest() {
     updateTestMetrics();
     testProgress.style.width = "100%";
     buildSummary();
-    unlockStep(2);
+    unlockStep(3);
 }
 
 function buildSummary() {
@@ -287,7 +280,6 @@ function resetOfficialTest() {
 }
 
 function resetAssessment() {
-    highestUnlockedStep = 0;
     resetPractice();
     resetOfficialTest();
     summaryStatus.textContent = "Complete the official test to generate a result.";
@@ -306,6 +298,10 @@ document.querySelectorAll("[data-next]").forEach((button) => {
 
 document.querySelectorAll("[data-back]").forEach((button) => {
     button.addEventListener("click", () => goToStep(Math.max(0, currentStep - 1)));
+});
+
+document.querySelectorAll("[data-jump-target]").forEach((button) => {
+    button.addEventListener("click", () => goToStep(Number(button.dataset.jumpTarget)));
 });
 
 steps.forEach((step) => {
@@ -339,7 +335,7 @@ testInput.addEventListener("input", () => {
 startPracticeBtn.addEventListener("click", startPractice);
 resetPracticeBtn.addEventListener("click", resetPractice);
 startTestBtn.addEventListener("click", startOfficialTest);
-viewSummaryBtn.addEventListener("click", () => unlockStep(2));
+viewSummaryBtn.addEventListener("click", () => unlockStep(3));
 newAssessmentBtn.addEventListener("click", resetAssessment);
 printSummaryBtn.addEventListener("click", () => window.print());
 
