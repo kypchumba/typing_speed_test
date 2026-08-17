@@ -2,9 +2,9 @@ const TEST_SECONDS = 60;
 const PASSING_WPM = 40;
 const PASSING_ACCURACY = 80;
 
-const practiceText = "A calm practice round helps you settle into the rhythm before the official attempt. Keep your eyes on the passage, let your hands move with steady pressure, and correct small mistakes without rushing the rest of the sentence.";
+const practiceText = "A calm practice round helps you settle into the rhythm before the official attempt. Keep your eyes on the passage, let your hands move with steady pressure and correct small mistakes without rushing the rest of the sentence.";
 
-const testText = "Every role depends on clear written communication, and fast typing is most valuable when accuracy stays high. During this assessment, focus on copying each word exactly as it appears. Maintain a consistent pace, use punctuation carefully, and avoid adding extra spaces. Strong results come from a balance of speed, attention, and control. The final score will measure net words per minute, accuracy, errors, and time used during this single official attempt.";
+const testText = "Every role depends on clear written communication and fast typing is most valuable when accuracy stays high. During this assessment, focus on copying each word exactly as it appears. Maintain a consistent pace, use punctuation carefully and avoid adding extra spaces. Strong results come from a balance of speed, attention and control. The final score will measure net words per minute, accuracy, errors and time used during this single official attempt.";
 
 const steps = Array.from(document.querySelectorAll(".step"));
 const panels = Array.from(document.querySelectorAll(".panel"));
@@ -143,25 +143,16 @@ function updatePracticeMetrics() {
 function startPractice() {
     clearInterval(practiceTimer);
     resetRun(practiceState);
+
     practiceInput.value = "";
     practiceInput.disabled = false;
     practiceInput.focus();
-    startPracticeBtn.textContent = "Practice running";
+
+    startPracticeBtn.textContent = "Start typing";
     startPracticeBtn.disabled = true;
+
     practiceTime.textContent = practiceState.timeLeft;
     updatePracticeMetrics();
-
-    practiceState.active = true;
-    practiceTimer = setInterval(() => {
-        practiceState.timeLeft--;
-        practiceState.elapsed++;
-        practiceTime.textContent = practiceState.timeLeft;
-        updatePracticeMetrics();
-
-        if (practiceState.timeLeft <= 0 || practiceInput.value.length >= practiceText.length) {
-            finishPractice();
-        }
-    }, 1000);
 }
 
 function finishPractice() {
@@ -309,6 +300,26 @@ steps.forEach((step) => {
 });
 
 practiceInput.addEventListener("input", () => {
+    // Start timer when the user types the first character
+    if (!practiceState.active && practiceInput.value.length > 0) {
+        practiceState.active = true;
+
+        practiceTimer = setInterval(() => {
+            practiceState.timeLeft--;
+            practiceState.elapsed++;
+
+            practiceTime.textContent = practiceState.timeLeft;
+            updatePracticeMetrics();
+
+            if (
+                practiceState.timeLeft <= 0 ||
+                practiceInput.value.length >= practiceText.length
+            ) {
+                finishPractice();
+            }
+        }, 1000);
+    }
+
     if (!practiceState.active) {
         return;
     }
@@ -330,6 +341,43 @@ testInput.addEventListener("input", () => {
     if (testInput.value.length >= testText.length) {
         finishOfficialTest();
     }
+});
+
+[practiceInput, testInput].forEach((input) => {
+    // Prevent paste
+    input.addEventListener("paste", (event) => {
+        event.preventDefault();
+    });
+
+    // Prevent copy
+    input.addEventListener("copy", (event) => {
+        event.preventDefault();
+    });
+
+    // Prevent cut
+    input.addEventListener("cut", (event) => {
+        event.preventDefault();
+    });
+
+    // Prevent drag & drop
+    input.addEventListener("drop", (event) => {
+        event.preventDefault();
+    });
+
+    // Prevent right-click menu
+    input.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+    });
+
+    // Prevent Ctrl/Cmd + C, V, X
+    input.addEventListener("keydown", (event) => {
+        if (
+            (event.ctrlKey || event.metaKey) &&
+            ["c", "v", "x"].includes(event.key.toLowerCase())
+        ) {
+            event.preventDefault();
+        }
+    });
 });
 
 startPracticeBtn.addEventListener("click", startPractice);
